@@ -54,7 +54,7 @@ public enum MessageEnum {
 	EMPTY_SOURCE_CRAWL_TOPIC_KEY("empty_source_crawl_topic_key", "Chủ đề không được để trống ở chế độ tùy chỉnh"),
 	EMPTY_SOURCE_STATUS("empty_status", "Trạng thái nguồn tin không được để trống"),
 	DUPLICATE_EMAIL("duplicate_email", "Email đã tồn tại"),
-	WRONG_ACCOUNT("wrong_account", "Sai tên đăng nhập hoặc mật khẩu"),
+	WRONG_ACCOUNT("wrong_account", "Wrong username or password"),
 	LOCKED_ACCOUNT("locked_account", "Tài khoản của bạn đã bị khóa");
 
 

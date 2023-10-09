@@ -1,0 +1,13 @@
+create table users(
+    user_id serial NOT NULL primary key,
+    full_name varchar(50) NOT NULL  ,
+    username varchar(50) NOT NULL unique ,
+    password varchar(100) NOT NULL ,
+    email varchar(70) NOT NULL unique ,
+    phone_number char(20) ,
+    telegram_url varchar(100) ,
+    facebook_url varchar(100),
+    avatar_url varchar(100),
+    created_time timestamptz,
+    updated_time timestamptz
+);

@@ -27,20 +27,20 @@ public class UserServiceImpl implements UserService {
     public UserPageDto getAll(int page, int offset) {
         Pageable pageable = PageRequest.of(page, offset, Sort.by(Sort.Direction.ASC,"createTime"));
         Page<User> userPage = userRepository.findAllBy(pageable);
-        List<User> userListFiltered = new ArrayList<>();
-        for(User user: userPage.getContent()) {
-            Boolean isUser = false;
-            for(Role roleCheck : user.getRoles()) {
-                if(roleCheck.getName().equals(ERole.ROLE_USER)) {
-                    isUser = true;
-                }
-                if(isUser) {
-                    userListFiltered.add(user);
-                }
-            }
-        }
+//        List<User> userListFiltered = new ArrayList<>();
+//        for(User user: userPage.getContent()) {
+//            Boolean isUser = false;
+//            for(Role roleCheck : user.getRoles()) {
+//                if(roleCheck.getName().equals(ERole.ROLE_USER)) {
+//                    isUser = true;
+//                }
+//                if(isUser) {
+//                    userListFiltered.add(user);
+//                }
+//            }
+//        }
         UserPageDto userPageDto = new UserPageDto();
-        userPageDto.setContent(userListFiltered);
+        userPageDto.setContent(userPage.getContent());
         userPageDto.setTotalElements(userPage.getTotalElements());
 
 //        List<User> userList = userPage.getContent();
@@ -53,20 +53,20 @@ public class UserServiceImpl implements UserService {
     public UserPageDto searchByUsername(String username, int page, int offset) {
         Pageable pageable = PageRequest.of(page, offset, Sort.by(Sort.Direction.ASC, "createTime"));
         Page<User> userPage = userRepository.findByUsernameContains(username, pageable);
-        List<User> userListFiltered = new ArrayList<>();
-        for(User user: userPage.getContent()) {
-            Boolean isUser = false;
-            for(Role roleCheck : user.getRoles()) {
-                if(roleCheck.getName().equals(ERole.ROLE_USER)) {
-                    isUser = true;
-                }
-                if(isUser) {
-                    userListFiltered.add(user);
-                }
-            }
-        }
+//        List<User> userListFiltered = new ArrayList<>();
+//        for(User user: userPage.getContent()) {
+//            Boolean isUser = false;
+//            for(Role roleCheck : user.getRoles()) {
+//                if(roleCheck.getName().equals(ERole.ROLE_USER)) {
+//                    isUser = true;
+//                }
+//                if(isUser) {
+//                    userListFiltered.add(user);
+//                }
+//            }
+//        }
         UserPageDto userPageDto = new UserPageDto();
-        userPageDto.setContent(userListFiltered);
+        userPageDto.setContent(userPage.getContent());
         userPageDto.setTotalElements(userPage.getTotalElements());
 
 //        return userPage;
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
         if(user.getUsername() == null || user.getUsername().isEmpty()) {
             throw new BusinessLogicException(MessageEnum.EMPTY_USERNAME.getMessage());
         }
-        User oldUser = userRepository.findById(user.getId()).get();
+        User oldUser = userRepository.findById(user.getUserId()).get();
         if(!user.getUsername().equals(oldUser.getUsername())) {
             if (userRepository.existsByUsername(user.getUsername())) {
                 throw new BusinessLogicException(MessageEnum.DUPLICATE_USERNAME.getMessage());
@@ -88,10 +88,10 @@ public class UserServiceImpl implements UserService {
         if(user.getEmail() != null) {
             oldUser.setEmail(user.getEmail());
         }
-        if(user.getStatus() != null) {
-            oldUser.setStatus(user.getStatus());
-        }
-        oldUser.setUpdateTime(new Date());
+//        if(user.getStatus() != null) {
+//            oldUser.setStatus(user.getStatus());
+//        }
+        oldUser.setUpdatedTime(new Date());
 
         userRepository.save(oldUser);
     }

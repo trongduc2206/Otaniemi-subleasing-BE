@@ -10,15 +10,13 @@ import org.springframework.stereotype.Repository;
 
 import com.ducvt.subleasing.account.models.User;
 
+import javax.swing.text.html.Option;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-  Optional<User> findByUsernameAndStatus(String username, Integer status);
+  Optional<User> findByUsernameOrEmail(String username, String email);
 
-  Optional<User> findByUsernameAndType(String username, String type);
-
-  Optional<User> findByEmailAndType(String email, String type);
-
-  Optional<User> findByThirdPartyIdAndType(String thirdPartyId, String type);
+  Optional<User> findByUsername(String username);
 
   Boolean existsByUsername(String username);
 
@@ -28,5 +26,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   Page<User> findByUsernameContains(String username, Pageable pageable);
 
-  List<User> findAllByStatus(Integer status);
 }

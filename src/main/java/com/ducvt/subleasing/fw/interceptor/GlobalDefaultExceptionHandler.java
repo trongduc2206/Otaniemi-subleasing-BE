@@ -60,7 +60,7 @@ public class GlobalDefaultExceptionHandler {
     @ExceptionHandler(value = BusinessLogicException.class)
     @ResponseBody
     public ResponseEntity businessLogicExceptionHandler(BusinessLogicException e) {
-        return ResponseFactory.error(HttpStatus.INTERNAL_SERVER_ERROR, e.getCode());
+        return ResponseFactory.error(HttpStatus.OK, e.getCode());
     }
 
     @ExceptionHandler(value = CustomBusinessLogicException.class)

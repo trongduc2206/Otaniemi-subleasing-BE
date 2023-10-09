@@ -1,10 +1,9 @@
 package com.ducvt.subleasing.account.security.services;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import com.ducvt.subleasing.account.models.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +20,8 @@ public class UserDetailsImpl implements UserDetails {
 
   private String email;
 
+  private final static Set<String> ROLES = new HashSet<>(Arrays.asList("USER"));
+
   @JsonIgnore
   private String password;
 
@@ -36,21 +37,22 @@ public class UserDetailsImpl implements UserDetails {
   }
 
   public static UserDetailsImpl build(User user) {
-    List<GrantedAuthority> authorities = user.getRoles().stream()
-        .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+
+    List<GrantedAuthority> authorities = ROLES.stream()
+        .map(role -> new SimpleGrantedAuthority(role))
         .collect(Collectors.toList());
 
     return new UserDetailsImpl(
-        user.getId(), 
+        user.getUserId(),
         user.getUsername(), 
         user.getEmail(),
-        user.getPassword(), 
+        user.getPassword(),
         authorities);
   }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return authorities;
+    return new ArrayList<>();
   }
 
   public Long getId() {

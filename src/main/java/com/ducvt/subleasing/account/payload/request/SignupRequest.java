@@ -5,8 +5,8 @@ import java.util.Set;
 import javax.validation.constraints.*;
 
 public class SignupRequest {
-  private String thirdPartyId;
-  private String type;
+//  private String thirdPartyId;
+//  private String type;
 
   @NotBlank
   @Size(min = 3, max = 20)
@@ -17,11 +17,23 @@ public class SignupRequest {
   @Email
   private String email;
 
-  private Set<String> role;
+//  private Set<String> role;
 
-//  @NotBlank
-  @Size(min = 6, max = 40)
+  @NotBlank
+  @Size(min = 6, max = 100)
   private String password;
+
+  @NotBlank
+  @Size(max = 50)
+  private String fullName;
+
+  public String getFullName() {
+    return fullName;
+  }
+
+  public void setFullName(String fullName) {
+    this.fullName = fullName;
+  }
 
   public String getUsername() {
     return username;
@@ -47,27 +59,27 @@ public class SignupRequest {
     this.password = password;
   }
 
-  public Set<String> getRole() {
-    return this.role;
-  }
+//  public Set<String> getRole() {
+//    return this.role;
+//  }
+//
+//  public void setRole(Set<String> role) {
+//    this.role = role;
+//  }
 
-  public void setRole(Set<String> role) {
-    this.role = role;
-  }
+//  public String getType() {
+//    return type;
+//  }
+//
+//  public void setType(String type) {
+//    this.type = type;
+//  }
 
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
-  }
-
-  public String getThirdPartyId() {
-    return thirdPartyId;
-  }
-
-  public void setThirdPartyId(String thirdPartyId) {
-    this.thirdPartyId = thirdPartyId;
-  }
+//  public String getThirdPartyId() {
+//    return thirdPartyId;
+//  }
+//
+//  public void setThirdPartyId(String thirdPartyId) {
+//    this.thirdPartyId = thirdPartyId;
+//  }
 }
