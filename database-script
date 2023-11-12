@@ -11,3 +11,27 @@ create table users(
     created_time timestamptz,
     updated_time timestamptz
 );
+
+create table offers(
+    offer_id serial NOT NULL primary key,
+    user_id int NOT NULL references users(user_id),
+    description text,
+    apartment_type int NOT NULL,
+    housing_type int NOT NULL,
+    apartment_floor_area float,
+    room_floor_area float NOT NULL ,
+    furnished int NOT NULL,
+    floor int NOT NULL,
+    monthly_price int NOT NULL,
+    actual_price int NOT NULL,
+    start_date date NOT NULL,
+    end_date date NOT NULL,
+    address varchar(70) NOT NULL,
+    deposit int NOT NULL,
+    post_code varchar(20) NOT NULL,
+    area varchar(20) NOT NULL,
+    laundry int NOT NULL,
+    created_time timestamptz,
+    updated_time timestamptz,
+    status int NOT NULL
+);

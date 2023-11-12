@@ -57,10 +57,16 @@ public class GlobalDefaultExceptionHandler {
         return ResponseFactory.error(HttpStatus.INTERNAL_SERVER_ERROR, MessageConstant.GENERAL_ERROR);
     }
 
+    @ExceptionHandler(value = AuthorizationException.class)
+    @ResponseBody
+    public ResponseEntity authorizationExceptionHandler(AuthorizationException e) {
+        return ResponseFactory.error(HttpStatus.UNAUTHORIZED, e.getCode());
+    }
+
     @ExceptionHandler(value = BusinessLogicException.class)
     @ResponseBody
     public ResponseEntity businessLogicExceptionHandler(BusinessLogicException e) {
-        return ResponseFactory.error(HttpStatus.OK, e.getCode());
+        return ResponseFactory.error(HttpStatus.INTERNAL_SERVER_ERROR, e.getCode());
     }
 
     @ExceptionHandler(value = CustomBusinessLogicException.class)

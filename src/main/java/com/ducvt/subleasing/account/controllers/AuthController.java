@@ -14,6 +14,7 @@ import com.ducvt.subleasing.account.security.services.UserDetailsImpl;
 import com.ducvt.subleasing.account.repository.UserRepository;
 import com.ducvt.subleasing.account.security.jwt.JwtUtils;
 import com.ducvt.subleasing.fw.constant.MessageEnum;
+import com.ducvt.subleasing.fw.exceptions.AuthorizationException;
 import com.ducvt.subleasing.fw.exceptions.BusinessLogicException;
 import com.ducvt.subleasing.fw.utils.ResponseFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +51,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-//        if(loginRequest.getType().equals("SYSTEM")) {
         Optional<User> user = userRepository.findByUsernameOrEmail(loginRequest.getUsername(), loginRequest.getEmail());
         if (user.isPresent()) {
-//                if (user.get().getStatus() == 1) {
             Authentication authentication;
             try {
                 if (loginRequest.getUsername() != null) {
@@ -64,7 +63,7 @@ public class AuthController {
                             new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
                 }
             } catch (Exception e) {
-                throw new BusinessLogicException(MessageEnum.WRONG_ACCOUNT.getMessage());
+                throw new AuthorizationException(MessageEnum.WRONG_ACCOUNT.getMessage());
             }
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -80,35 +79,9 @@ public class AuthController {
                     userDetails.getUsername(),
                     userDetails.getEmail(),
                     roles));
-//                } else {
-//                    throw new BusinessLogicException(MessageEnum.LOCKED_ACCOUNT.getMessage());
-//                }
         } else {
-            throw new BusinessLogicException(MessageEnum.WRONG_ACCOUNT.getMessage());
+            throw new AuthorizationException(MessageEnum.WRONG_ACCOUNT.getMessage());
         }
-//        } else {
-//            Optional<User> userOptional = userRepository.findByEmailAndType(loginRequest.getEmail(), loginRequest.getType());
-//            if(userOptional.isPresent()) {
-//                Authentication authentication = authenticationManager.authenticate(
-//                        new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-//
-//                SecurityContextHolder.getContext().setAuthentication(authentication);
-//                String jwt = jwtUtils.generateJwtToken(authentication);
-//
-//                UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-//                List<String> roles = userDetails.getAuthorities().stream()
-//                        .map(item -> item.getAuthority())
-//                        .collect(Collectors.toList());
-//
-//                return ResponseFactory.success(new JwtResponse(jwt,
-//                        userDetails.getId(),
-//                        userDetails.getUsername(),
-//                        userDetails.getEmail(),
-//                        roles));
-//            } else {
-//                throw new BusinessLogicException(MessageEnum.WRONG_ACCOUNT.getMessage());
-//            }
-//        }
     }
 
     @PostMapping("/signup")
