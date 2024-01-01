@@ -12,4 +12,8 @@ public interface UserService {
     UserPageDto searchByUsername(String username, int page, int offset);
 
     void update(User user);
+
+    User getById(Long id);
+
+    User getByUsername(String username);
 }

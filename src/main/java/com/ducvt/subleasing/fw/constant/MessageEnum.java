@@ -34,9 +34,10 @@ public enum MessageEnum {
 	BAD_REQUEST("bad_request", "Bad request"),
 
 	NOT_FOUND_TOPIC_BY_KEY("topic key not found", "Không tìm thấy topic theo topic key"),
-	NOT_FOUND_USER_BY_ID("user id not found", "Không tìm thấy tài khoản theo id"),
+	NOT_FOUND_USER_BY_ID("user id not found", "Not found user by user id"),
 	NOT_FOUND_NEWS_BY_ID("news id not found", "Không tìm thấy tin tức theo id"),
 	NOT_FOUND_SOURCE_BY_ID("source id not found", "Không tìm thấy nguồn tin theo id"),
+	NOT_FOUND_OFFER("offer is not found", "offer is not found"),
 
 	NEWS_SAVED_ALREADY("news saved already", "Tin đã được lưu trước đó"),
 

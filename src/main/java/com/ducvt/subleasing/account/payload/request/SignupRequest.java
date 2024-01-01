@@ -23,9 +23,38 @@ public class SignupRequest {
   @Size(min = 6, max = 100)
   private String password;
 
-  @NotBlank
   @Size(max = 50)
   private String fullName;
+
+  private String phoneNumber;
+
+  private String telegramUrl;
+
+  private String facebookUrl;
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public String getTelegramUrl() {
+    return telegramUrl;
+  }
+
+  public void setTelegramUrl(String telegramUrl) {
+    this.telegramUrl = telegramUrl;
+  }
+
+  public String getFacebookUrl() {
+    return facebookUrl;
+  }
+
+  public void setFacebookUrl(String facebookUrl) {
+    this.facebookUrl = facebookUrl;
+  }
 
   public String getFullName() {
     return fullName;

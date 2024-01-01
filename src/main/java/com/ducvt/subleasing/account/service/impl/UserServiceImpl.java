@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -95,5 +96,26 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(oldUser);
     }
+
+    @Override
+    public User getById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()) {
+            return user.get();
+        } else {
+            throw new BusinessLogicException(MessageEnum.NOT_FOUND_USER_BY_ID.getMessage());
+        }
+    }
+
+    @Override
+    public User getByUsername(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if(user.isPresent()) {
+            return user.get();
+        } else {
+            throw new BusinessLogicException(MessageEnum.NOT_FOUND_USER_BY_ID.getMessage());
+        }
+    }
+
 
 }

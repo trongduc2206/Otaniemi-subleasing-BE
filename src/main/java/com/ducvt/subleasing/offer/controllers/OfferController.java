@@ -44,4 +44,23 @@ public class OfferController {
         return ResponseFactory.success(offerResponse);
     }
 
+
+    @GetMapping("/{id}")
+    public ResponseEntity getById(@PathVariable Long id) {
+        return ResponseFactory.success(offerService.getById(id));
+    }
+
+    @GetMapping("/manage")
+    public ResponseEntity getAllByUser(@RequestParam int page, @RequestParam int size, @RequestParam Long userId) {
+        OfferPageDto offerPageDto = offerService.getByUserId(page, size, userId);
+        return ResponseFactory.success(offerPageDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteById(@PathVariable Long id) {
+        offerService.removeOffer(id);
+        return ResponseFactory.success(id);
+    }
+
+
 }

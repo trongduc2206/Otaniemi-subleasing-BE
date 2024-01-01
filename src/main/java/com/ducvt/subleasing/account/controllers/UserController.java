@@ -37,5 +37,15 @@ public class UserController {
         return ResponseFactory.success();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getById(@PathVariable Long id) {
+        return ResponseFactory.success(userService.getById(id));
+    }
+
+    @GetMapping("/username/{username}")
+    public ResponseEntity getByUsername(@PathVariable String username) {
+        return ResponseFactory.success(userService.getByUsername(username));
+    }
+
 
 }

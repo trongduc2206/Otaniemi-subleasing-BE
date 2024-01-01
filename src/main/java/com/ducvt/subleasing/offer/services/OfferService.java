@@ -14,4 +14,10 @@ public interface OfferService {
     OfferPageDto filter(int page, int size, String apartmentType, String area, Integer priceLeq, Integer priceGeq);
 
     OfferResponse create(OfferRequest offerRequest);
+
+    Offer getById(Long offerId);
+
+    OfferPageDto getByUserId(int page, int size, Long userId);
+
+    void removeOffer(Long offerId);
 }

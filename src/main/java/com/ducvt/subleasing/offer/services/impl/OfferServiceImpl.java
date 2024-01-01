@@ -2,6 +2,8 @@ package com.ducvt.subleasing.offer.services.impl;
 
 import com.ducvt.subleasing.account.models.User;
 import com.ducvt.subleasing.account.repository.UserRepository;
+import com.ducvt.subleasing.fw.constant.MessageEnum;
+import com.ducvt.subleasing.fw.exceptions.BusinessLogicException;
 import com.ducvt.subleasing.offer.dto.OfferPageDto;
 import com.ducvt.subleasing.offer.entities.Offer;
 import com.ducvt.subleasing.offer.payload.requests.OfferCriteria;
@@ -31,7 +33,7 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public OfferPageDto getAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC,"createdTime"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC,"createdTime"));
         Page<Offer> offerPage = offerRepository.findByStatus(1, pageable);
         OfferPageDto offerPageDto = new OfferPageDto();
         offerPageDto.setContent(offerPage.getContent());
@@ -82,7 +84,7 @@ public class OfferServiceImpl implements OfferService {
     }
     @Override
     public OfferPageDto filter(int page, int size, String apartmentType, String area, Integer priceLeq, Integer priceGeq) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC,"createdTime"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC,"createdTime"));
         List<Integer> typeIntegerList = new ArrayList<>();
         if(apartmentType!= null && !apartmentType.isEmpty()) {
             List<String> typeStringList = Arrays.asList(apartmentType.split(","));
@@ -140,6 +142,45 @@ public class OfferServiceImpl implements OfferService {
             return offerResponse;
         } else {
             return null;
+        }
+    }
+
+    @Override
+    public Offer getById(Long offerId) {
+        Optional<Offer> optionalOffer = offerRepository.findByOfferId(offerId);
+        if(optionalOffer.isPresent()) {
+            return optionalOffer.get();
+        } else {
+            throw new BusinessLogicException(MessageEnum.NOT_FOUND_OFFER.getMessage());
+        }
+    }
+
+    @Override
+    public OfferPageDto getByUserId(int page, int size, Long userId) {
+        Optional<User> userOptional = userRepository.findByUserId(userId);
+        if(!userOptional.isPresent()) {
+            throw new BusinessLogicException(MessageEnum.NOT_FOUND_USER_BY_ID.getMessage());
+        } else {
+            User user = userOptional.get();
+            Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC,"createdTime"));
+
+            Page<Offer> offerPage = offerRepository.findByUserAndStatus(user, 1, pageable);
+            OfferPageDto offerPageDto = new OfferPageDto();
+            offerPageDto.setContent(offerPage.getContent());
+            offerPageDto.setTotalElements(offerPage.getTotalElements());
+            return offerPageDto;
+        }
+    }
+
+    @Override
+    public void removeOffer(Long offerId) {
+        Optional<Offer> optionalOffer = offerRepository.findByOfferId(offerId);
+        if(optionalOffer.isPresent()) {
+            Offer offer = optionalOffer.get();
+            offer.setStatus(0);
+            offerRepository.save(offer);
+        } else {
+            throw new BusinessLogicException(MessageEnum.NOT_FOUND_OFFER.getMessage());
         }
     }
 

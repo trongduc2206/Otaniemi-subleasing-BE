@@ -158,6 +158,9 @@ public class AuthController {
 //
 //        user.setRoles(roles);
 //        user.setStatus(1);
+        user.setPhoneNumber(signUpRequest.getPhoneNumber());
+        user.setFacebookUrl(signUpRequest.getFacebookUrl());
+        user.setTelegramUrl(signUpRequest.getTelegramUrl());
         user.setCreatedTime(new Date());
         user.setUpdatedTime(new Date());
         userRepository.save(user);

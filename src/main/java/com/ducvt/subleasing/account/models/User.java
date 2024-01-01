@@ -151,4 +151,36 @@ public class User {
 //  public void setThirdPartyId(String thirdPartyId) {
 //    this.thirdPartyId = thirdPartyId;
 //  }
+
+  public String getFullName() {
+    return fullName;
+  }
+
+  public void setFullName(String fullName) {
+    this.fullName = fullName;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public String getTelegramUrl() {
+    return telegramUrl;
+  }
+
+  public void setTelegramUrl(String telegramUrl) {
+    this.telegramUrl = telegramUrl;
+  }
+
+  public String getFacebookUrl() {
+    return facebookUrl;
+  }
+
+  public void setFacebookUrl(String facebookUrl) {
+    this.facebookUrl = facebookUrl;
+  }
 }
